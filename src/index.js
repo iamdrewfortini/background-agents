@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Load environment variables first
+require('dotenv').config();
+
 const { program } = require('commander');
 const chalk = require('chalk');
 const ora = require('ora');

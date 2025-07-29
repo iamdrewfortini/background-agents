@@ -20,8 +20,11 @@ A comprehensive suite of background agents for development automation, designed 
 # Install dependencies
 npm install
 
-# Setup environment
+# Setup environment and configuration
 npm run setup
+
+# Setup environment variables (optional but recommended)
+npm run setup-env
 
 # Start all agents
 npm start

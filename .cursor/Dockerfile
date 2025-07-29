@@ -5,6 +5,24 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV NODE_VERSION=18.x
 ENV CURSOR_ENVIRONMENT=true
 
+# Background Agents Environment Variables
+ENV NODE_ENV=development
+ENV PORT=3000
+ENV HOST=localhost
+ENV LOG_LEVEL=info
+ENV LOG_DIR=/home/ubuntu/logs
+ENV MAX_CONCURRENT_AGENTS=5
+ENV HEALTH_CHECK_INTERVAL=30000
+ENV RESTART_ON_FAILURE=true
+ENV MAX_RESTART_ATTEMPTS=3
+ENV DEV_MODE=true
+ENV ENABLE_METRICS=true
+ENV ENABLE_HEALTH_CHECKS=true
+ENV MONITORING_INTERVAL=30000
+ENV MONITORING_ALERT_CPU=80
+ENV MONITORING_ALERT_MEMORY=85
+ENV MONITORING_ALERT_DISK=90
+
 # Update system and install basic dependencies
 RUN apt-get update && apt-get install -y \
     curl \
@@ -20,47 +38,28 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     software-properties-common \
     tree \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
-    && apt-get install -y nodejs
-
-# Install additional monitoring tools
-RUN apt-get update && apt-get install -y \
     procps \
     sysstat \
     iotop \
     nethogs \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
+    && apt-get install -y nodejs
+
 # Install nodemon globally for development
 RUN npm install -g nodemon
 
-# Create app directory
-WORKDIR /app
+# Create ubuntu user with home directory
+RUN useradd -m -s /bin/bash ubuntu && \
+    usermod -aG sudo ubuntu
 
-# Copy package files
-COPY package*.json ./
+# Set WORKDIR to home directory as per best practices
+WORKDIR /home/ubuntu
 
-# Install dependencies
-RUN npm install
-
-# Copy source code
-COPY . .
-
-# Create necessary directories for background agents
-RUN mkdir -p logs monitoring reviews test-results deployments security performance docs
-
-# Set permissions for executable scripts
-RUN chmod +x src/index.js scripts/setup.js .cursor/start-agents.js
-
-# Create a non-root user for security
-RUN useradd -m -s /bin/bash cursor && \
-    chown -R cursor:cursor /app
-
-# Switch to non-root user
-USER cursor
+# Switch to ubuntu user
+USER ubuntu
 
 # Expose port for dashboard
 EXPOSE 3000
@@ -69,5 +68,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:3000/health || exit 1
 
-# Default command - start background agents and dashboard
-CMD ["sh", "-c", "node .cursor/start-agents.js & npm run dev"]
+# Default command - this will be overridden by the agent
+CMD ["/bin/bash"]

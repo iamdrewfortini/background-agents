@@ -20,6 +20,7 @@
     "lint": "eslint src/",
     "format": "prettier --write src/",
     "setup": "node scripts/setup.js",
+    "setup-env": "node scripts/setup-env.js",
     "detect": "node scripts/detect-repo.js",
     "cursor": "node .cursor/start-agents.js",
     "clean": "rm -rf logs/* monitoring/* reviews/* test-results/* deployments/* security/* performance/* docs/*",
