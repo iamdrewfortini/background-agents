@@ -1,19 +1,41 @@
 {
-  "snapshot": "POPULATED_FROM_SETTINGS",
-  "install": "npm install && cargo install --locked --git https://github.com/warpdotdev/warp.git",
-  "start": "echo 'Starting Warp terminal background agents environment'",
+  "name": "Background Agents Development Environment",
+  "install": "npm install && npm run setup && sudo apt-get update && sudo apt-get install -y htop curl wget git",
+  "start": "echo 'Background agents environment ready' && mkdir -p logs monitoring reviews test-results deployments security performance docs && node .cursor/start-agents.js & npm run dev",
   "terminals": [
     {
-      "name": "Warp Terminal",
-      "command": "warp"
+      "name": "Background Agents Dashboard",
+      "command": "npm run dev",
+      "description": "Starts the web dashboard for monitoring background agents on port 3000"
     },
     {
-      "name": "Development Server",
-      "command": "npm run dev"
+      "name": "Agent Logs Monitor",
+      "command": "tail -f logs/combined.log",
+      "description": "Monitors real-time logs from all background agents"
     },
     {
-      "name": "Test Runner",
-      "command": "npm test"
+      "name": "System Monitor",
+      "command": "htop",
+      "description": "System resource monitoring to track agent performance"
+    },
+    {
+      "name": "Agent Status",
+      "command": "watch -n 5 'node src/index.js list'",
+      "description": "Periodically displays the status of all background agents"
+    },
+    {
+      "name": "Development Terminal",
+      "command": "bash",
+      "description": "Interactive terminal for development and debugging"
     }
+  ],
+  "ports": [
+    {
+      "name": "Background Agents Dashboard",
+      "port": 3000
+    }
+  ],
+  "repositoryDependencies": [
+    "github.com/your-org/background-agents"
   ]
 } 

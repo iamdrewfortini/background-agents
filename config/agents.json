@@ -1,5 +1,6 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "environment": "development",
   "agents": {
     "code-review": {
       "name": "code-review",
@@ -15,7 +16,8 @@
         "excludePaths": [
           "node_modules/",
           "dist/",
-          "build/"
+          "build/",
+          "coverage/"
         ],
         "reviewOnSave": true,
         "reviewOnCommit": true,
@@ -25,7 +27,10 @@
           "security": true,
           "performance": true,
           "style": true
-        }
+        },
+        "severityLevels": ["error", "warning", "info"],
+        "autoFix": false,
+        "reportFormat": "json"
       }
     },
     "test-runner": {
@@ -43,7 +48,11 @@
         "runOnSave": false,
         "runOnCommit": true,
         "parallel": true,
-        "timeout": 30000
+        "timeout": 30000,
+        "retryFailedTests": true,
+        "maxRetries": 3,
+        "coverageReport": true,
+        "testResultsDir": "./test-results"
       }
     },
     "monitoring": {
@@ -64,7 +73,11 @@
           "disk": 90
         },
         "logLevel": "info",
-        "retention": "7d"
+        "retention": "7d",
+        "monitoringInterval": 30000,
+        "enableAlerts": true,
+        "enableReports": true,
+        "reportInterval": 3600000
       }
     },
     "git-sync": {
@@ -77,7 +90,81 @@
         "autoPush": false,
         "branchNaming": "feature/{ticket}",
         "commitMessageTemplate": "feat: {description}",
-        "syncInterval": 300000
+        "syncInterval": 300000,
+        "enableBranchProtection": true,
+        "requirePullRequest": true,
+        "autoMerge": false,
+        "conflictResolution": "manual"
+      }
+    },
+    "deployment": {
+      "name": "deployment",
+      "description": "Manages deployment processes and environments",
+      "enabled": false,
+      "type": "deployment",
+      "config": {
+        "environments": ["staging", "production"],
+        "autoDeploy": false,
+        "requireApproval": true,
+        "rollbackOnFailure": true,
+        "healthChecks": true,
+        "deploymentTimeout": 300000,
+        "maxDeployments": 5,
+        "deploymentStrategy": "rolling"
+      }
+    },
+    "security": {
+      "name": "security",
+      "description": "Scans for security vulnerabilities and compliance issues",
+      "enabled": false,
+      "type": "security",
+      "config": {
+        "vulnerabilityScan": true,
+        "dependencyCheck": true,
+        "secretsScan": true,
+        "complianceCheck": true,
+        "autoFix": false,
+        "severityLevels": ["high", "medium", "low"],
+        "scanInterval": 86400000,
+        "reportFormat": "json",
+        "enableBlocking": false
+      }
+    },
+    "performance": {
+      "name": "performance",
+      "description": "Analyzes and optimizes application performance",
+      "enabled": false,
+      "type": "performance",
+      "config": {
+        "profiling": true,
+        "memoryLeakDetection": true,
+        "bundleAnalysis": true,
+        "lighthouse": true,
+        "thresholds": {
+          "firstContentfulPaint": 2000,
+          "largestContentfulPaint": 4000,
+          "cumulativeLayoutShift": 0.1
+        },
+        "analysisInterval": 3600000,
+        "enableOptimization": false
+      }
+    },
+    "documentation": {
+      "name": "documentation",
+      "description": "Automatically generates and maintains documentation",
+      "enabled": false,
+      "type": "documentation",
+      "config": {
+        "autoGenerate": true,
+        "formats": ["markdown", "html", "pdf"],
+        "includeExamples": true,
+        "updateOnChange": true,
+        "templates": {
+          "api": "./templates/api.md",
+          "readme": "./templates/readme.md"
+        },
+        "outputDir": "./docs",
+        "enableAutoCommit": false
       }
     }
   },
@@ -86,6 +173,12 @@
     "maxConcurrentAgents": 5,
     "healthCheckInterval": 30000,
     "restartOnFailure": true,
-    "maxRestartAttempts": 3
+    "maxRestartAttempts": 3,
+    "enableMetrics": true,
+    "enableHealthChecks": true,
+    "logRetention": "30d",
+    "notificationChannels": ["console", "file"],
+    "environment": "development",
+    "cursorOnly": false
   }
 }

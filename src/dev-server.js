@@ -1,6 +1,8 @@
 const express = require('express');
 const WebSocket = require('ws');
 const path = require('path');
+const fs = require('fs-extra');
+const chalk = require('chalk');
 const { AgentManager } = require('./agents/agent-manager');
 const { ConfigManager } = require('./config/config-manager');
 const { Logger } = require('./utils/logger');
@@ -29,14 +31,14 @@ class DevServer {
       // Setup routes
       this.setupRoutes();
       
-      // Setup WebSocket
-      this.setupWebSocket();
-      
       // Start server
       this.server = this.app.listen(this.port, () => {
         this.logger.info(`Development server running on http://localhost:${this.port}`);
         console.log(chalk.green(`🚀 Development server running on http://localhost:${this.port}`));
       });
+      
+      // Setup WebSocket after server is started
+      this.setupWebSocket();
       
       // Start agents
       await this.startAgents();
@@ -72,6 +74,8 @@ class DevServer {
   setupMiddleware() {
     this.app.use(express.json());
     this.app.use(express.static(path.join(__dirname, '../public')));
+    
+
     
     // CORS middleware
     this.app.use((req, res, next) => {
@@ -207,7 +211,9 @@ class DevServer {
   }
 
   setupWebSocket() {
-    this.wss = new WebSocket.Server({ server: this.server });
+    this.wss = new WebSocket.Server({ 
+      server: this.server
+    });
     
     this.wss.on('connection', (ws) => {
       this.logger.info('WebSocket client connected');
@@ -273,12 +279,55 @@ class DevServer {
   broadcast(type, data) {
     if (!this.wss) return;
     
-    const message = JSON.stringify({ type, data });
-    this.wss.clients.forEach(client => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
+    try {
+      // Filter out circular references and sensitive data
+      const safeData = this.sanitizeData(data);
+      const message = JSON.stringify({ type, data: safeData });
+      
+      this.wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
+    } catch (error) {
+      this.logger.error('Error broadcasting message', { error: error.message, type });
+    }
+  }
+
+  sanitizeData(data) {
+    if (!data || typeof data !== 'object') {
+      return data;
+    }
+
+    const seen = new WeakSet();
+    const sanitize = (obj) => {
+      if (obj === null || typeof obj !== 'object') {
+        return obj;
       }
-    });
+
+      if (seen.has(obj)) {
+        return '[Circular Reference]';
+      }
+
+      seen.add(obj);
+
+      if (Array.isArray(obj)) {
+        return obj.map(sanitize);
+      }
+
+      const result = {};
+      for (const [key, value] of Object.entries(obj)) {
+        // Skip logger and other problematic properties
+        if (key === 'logger' || key === '_readableState' || key === 'parent') {
+          continue;
+        }
+        result[key] = sanitize(value);
+      }
+
+      return result;
+    };
+
+    return sanitize(data);
   }
 
   async startAgents() {

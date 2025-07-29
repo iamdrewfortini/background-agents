@@ -1,10 +1,12 @@
 const fs = require('fs-extra');
 const path = require('path');
 const { Logger } = require('../utils/logger');
+const RepoConfig = require('./repo-config');
 
 class ConfigManager {
-  constructor(configPath = './config/agents.json') {
-    this.configPath = configPath;
+  constructor(configPath = null) {
+    this.repoConfig = new RepoConfig();
+    this.configPath = configPath || this.repoConfig.configPath;
     this.logger = new Logger();
     this.config = null;
     this.loadConfig();

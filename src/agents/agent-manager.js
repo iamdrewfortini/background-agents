@@ -120,14 +120,14 @@ class AgentManager extends EventEmitter {
   getAgentClass(agentName) {
     // Map agent names to their classes
     const agentClasses = {
-      'code-review': require('./code-review'),
-      'test-runner': require('./test-runner'),
-      'deployment': require('./deployment'),
-      'monitoring': require('./monitoring'),
-      'git-sync': require('./git-sync'),
-      'performance': require('./performance'),
-      'security': require('./security'),
-      'documentation': require('./documentation')
+      'code-review': require('./code-review').CodeReviewAgent,
+      'test-runner': require('./test-runner').TestRunnerAgent,
+      'deployment': require('./deployment').DeploymentAgent,
+      'monitoring': require('./monitoring').MonitoringAgent,
+      'git-sync': require('./git-sync').GitSyncAgent,
+      'performance': require('./performance').PerformanceAgent,
+      'security': require('./security').SecurityAgent,
+      'documentation': require('./documentation').DocumentationAgent
     };
 
     const AgentClass = agentClasses[agentName];

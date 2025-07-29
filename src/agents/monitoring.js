@@ -199,8 +199,8 @@ class MonitoringAgent extends BaseAgent {
       lines.slice(1).forEach(line => {
         const parts = line.split(/\s+/);
         if (parts.length >= 4) {
-          const interface = parts[0];
-          interfaces[interface] = {
+          const interfaceName = parts[0];
+          interfaces[interfaceName] = {
             rxBytes: parseInt(parts[3]) || 0,
             txBytes: parseInt(parts[7]) || 0,
             rxPackets: parseInt(parts[2]) || 0,
