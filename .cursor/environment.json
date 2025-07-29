@@ -2,7 +2,7 @@
   "name": "Background Agents Development Environment",
   "description": "A comprehensive development environment for background agents with monitoring, automation, and real-time dashboard",
   "user": "root",
-  "install": "npm install && npm run setup && sudo apt-get update && sudo apt-get install -y htop curl wget git tree && npm install -g nodemon",
+  "install": "npm install && npm run setup && apt-get update && apt-get install -y htop curl wget git tree && npm install -g nodemon",
   "start": "echo '🚀 Background Agents Environment Starting...' && mkdir -p logs monitoring reviews test-results deployments security performance docs && node .cursor/start-agents.js & sleep 2 && npm run dev",
   "terminals": [
     {
@@ -51,45 +51,8 @@
   "repositoryDependencies": [
     "github.com/iamdrewfortini/background-agents"
   ],
-  "backgroundAgents": {
-    "enabled": true,
-    "autoStart": true,
-    "monitoring": {
-      "enabled": true,
-      "interval": 30000,
-      "metrics": [
-        "cpu",
-        "memory",
-        "disk",
-        "network"
-      ]
-    },
-    "codeReview": {
-      "enabled": true,
-      "watchPaths": [
-        "src/",
-        "lib/",
-        "app/"
-      ],
-      "autoFix": false
-    },
-    "testRunner": {
-      "enabled": true,
-      "command": "npm test",
-      "coverage": true
-    },
-    "gitSync": {
-      "enabled": true,
-      "autoCommit": false,
-      "autoPush": false
-    }
-  },
-  "environment": {
-    "NODE_ENV": "development",
-    "LOG_LEVEL": "info",
-    "PORT": "3000",
-    "CURSOR_ENVIRONMENT": "true"
-  },
+  "snapshot": "ubuntu-22.04",
+  "agentCanUpdateSnapshot": true,
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
