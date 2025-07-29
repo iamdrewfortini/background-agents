@@ -21,6 +21,10 @@ docs/
 .env.test.local
 .env.production.local
 
+# GitHub CLI config
+.gh-config/
+gh-hosts.yml
+
 # IDE files
 .vscode/
 .idea/

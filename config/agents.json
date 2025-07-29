@@ -166,6 +166,54 @@
         "outputDir": "./docs",
         "enableAutoCommit": false
       }
+    },
+    "github-automation": {
+      "name": "github-automation",
+      "description": "Automates GitHub workflows including PRs, issues, code reviews, and AI-powered improvements",
+      "enabled": false,
+      "type": "github-automation",
+      "config": {
+        "githubToken": "",
+        "watchPaths": [
+          "src/",
+          "lib/",
+          "app/"
+        ],
+        "excludePaths": [
+          "node_modules/",
+          "dist/",
+          ".git/",
+          "coverage/"
+        ],
+        "autoCreatePR": false,
+        "autoReviewPR": true,
+        "autoFixIssues": false,
+        "autoImplementFeatures": false,
+        "requireApproval": true,
+        "webhookSecret": "",
+        "prSettings": {
+          "draft": false,
+          "autoMerge": false,
+          "deleteAfterMerge": true,
+          "squashMerge": true
+        },
+        "issueSettings": {
+          "autoAssign": true,
+          "labelsToWatch": ["bug", "enhancement", "good first issue"],
+          "priorityLabels": ["critical", "high-priority"]
+        },
+        "reviewSettings": {
+          "minApprovals": 1,
+          "dismissStaleReviews": true,
+          "requireCodeOwnerReview": false
+        },
+        "aiSettings": {
+          "provider": "openai",
+          "model": "gpt-4",
+          "enableSuggestions": true,
+          "enableAutoFix": false
+        }
+      }
     }
   },
   "global": {

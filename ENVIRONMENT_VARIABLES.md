@@ -1,226 +1,194 @@
-# Environment Variables for Background Agents
+# Environment Variables Configuration
 
-This document outlines all the environment variables used by the background agents system. Create a `.env` file in your project root and add the variables you need.
+This document describes all environment variables used by the Background Agents system.
 
-## Quick Setup
-
-1. Copy the variables below into a `.env` file
-2. Update the values according to your environment
-3. The system will automatically load these variables
-
-## Environment Variables Reference
-
-### Application Settings
-```bash
-# Core application settings
-NODE_ENV=development                    # Environment: development, production, test
-PORT=3000                              # Dashboard port
-HOST=localhost                         # Dashboard host
-```
-
-### Logging Configuration
-```bash
-# Logging settings
-LOG_LEVEL=info                         # Log level: debug, info, warn, error
-LOG_DIR=./logs                         # Log directory path
-LOG_MAX_SIZE=10MB                      # Maximum log file size
-LOG_MAX_FILES=5                        # Maximum number of log files
-LOG_RETENTION_DAYS=30                  # How long to keep logs
-```
-
-### Agent Configuration
-```bash
-# Agent management
-AGENT_CONFIG_PATH=./config/agents.json # Path to agent configuration
-MAX_CONCURRENT_AGENTS=5                # Maximum agents running simultaneously
-HEALTH_CHECK_INTERVAL=30000            # Health check interval (ms)
-RESTART_ON_FAILURE=true                # Auto-restart failed agents
-MAX_RESTART_ATTEMPTS=3                 # Maximum restart attempts
-```
-
-### Cursor Environment Detection
-```bash
-# Cursor-specific settings
-CURSOR_ENVIRONMENT=true                # Enable Cursor environment detection
-CURSOR_WORKSPACE_ID=                   # Cursor workspace ID (auto-detected)
-CURSOR_SESSION_ID=                     # Cursor session ID (auto-detected)
-```
+## Required Variables
 
 ### GitHub Integration
-```bash
-# GitHub settings
-GITHUB_TOKEN=                          # GitHub personal access token
-GITHUB_REPOSITORY=iamdrewfortini/background-agents
-GITHUB_BRANCH=main                     # Default branch
-GITHUB_AUTO_SYNC=true                 # Auto-sync with GitHub
-```
 
-### Security Settings
-```bash
-# Security scanning
-SECURITY_SCAN_INTERVAL=86400000        # Security scan interval (24h)
-SECURITY_DEPENDENCY_CHECK=true         # Check for vulnerable dependencies
-SECURITY_SECRETS_SCAN=true             # Scan for secrets in code
-SECURITY_COMPLIANCE_CHECK=true         # Run compliance checks
-```
+#### `GITHUB_TOKEN`
+- **Description**: GitHub Personal Access Token (classic) with full repo access
+- **Required**: Yes (for GitHub automation agent)
+- **Permissions needed**:
+  - `repo` (Full control of private repositories)
+  - `workflow` (Update GitHub Action workflows)
+  - `write:packages` (Upload packages to GitHub Package Registry)
+  - `delete:packages` (Delete packages from GitHub Package Registry)
+  - `admin:org` (Full control of orgs and teams, read and write org projects)
+  - `admin:public_key` (Full control of user public keys)
+  - `admin:repo_hook` (Full control of repository hooks)
+  - `gist` (Create gists)
+  - `notifications` (Access notifications)
+  - `user` (Update ALL user data)
+  - `project` (Full control of projects)
+- **How to create**:
+  1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+  2. Click "Generate new token (classic)"
+  3. Select all required scopes
+  4. Copy the token and set it as an environment variable
 
-### Monitoring Configuration
-```bash
-# System monitoring
-MONITORING_INTERVAL=30000              # Monitoring interval (30s)
-MONITORING_METRICS=cpu,memory,disk,network
-MONITORING_ALERT_CPU=80                # CPU usage alert threshold (%)
-MONITORING_ALERT_MEMORY=85             # Memory usage alert threshold (%)
-MONITORING_ALERT_DISK=90               # Disk usage alert threshold (%)
-```
+#### `GITHUB_OWNER`
+- **Description**: GitHub repository owner (username or organization)
+- **Required**: No (auto-detected from git remote)
+- **Example**: `iamdrewfortini`
 
-### Testing Configuration
-```bash
-# Test runner settings
-TEST_COMMAND=npm test                  # Test command to run
-TEST_COVERAGE_THRESHOLD=80             # Minimum coverage percentage
-TEST_TIMEOUT=30000                     # Test timeout (30s)
-TEST_MAX_RETRIES=3                     # Maximum test retries
-TEST_PARALLEL=true                     # Run tests in parallel
-```
+#### `GITHUB_REPO`
+- **Description**: GitHub repository name
+- **Required**: No (auto-detected from git remote)
+- **Example**: `background-agents`
 
-### Deployment Settings
-```bash
-# Deployment configuration
-DEPLOYMENT_ENVIRONMENTS=staging,production
-DEPLOYMENT_AUTO_DEPLOY=false           # Auto-deploy on changes
-DEPLOYMENT_REQUIRE_APPROVAL=true       # Require manual approval
-DEPLOYMENT_ROLLBACK_ON_FAILURE=true    # Auto-rollback on failure
-DEPLOYMENT_HEALTH_CHECKS=true          # Run health checks after deploy
-```
+## AI Integration Variables
 
-### Performance Settings
-```bash
-# Performance analysis
-PERFORMANCE_ANALYSIS_INTERVAL=3600000  # Analysis interval (1h)
-PERFORMANCE_THRESHOLD_FCP=2000         # First Contentful Paint threshold (ms)
-PERFORMANCE_THRESHOLD_LCP=4000         # Largest Contentful Paint threshold (ms)
-PERFORMANCE_THRESHOLD_CLS=0.1          # Cumulative Layout Shift threshold
-```
+### OpenAI Configuration
 
-### Documentation Settings
-```bash
-# Documentation generation
-DOCS_AUTO_GENERATE=true                # Auto-generate documentation
-DOCS_FORMATS=markdown,html,pdf         # Output formats
-DOCS_INCLUDE_EXAMPLES=true             # Include code examples
-DOCS_UPDATE_ON_CHANGE=true             # Update docs on code changes
-DOCS_OUTPUT_DIR=./docs                 # Documentation output directory
-```
+#### `OPENAI_API_KEY`
+- **Description**: OpenAI API key for GPT models
+- **Required**: Yes (if using OpenAI as AI provider)
+- **How to get**: https://platform.openai.com/api-keys
 
-### Notification Settings
-```bash
-# Notification channels
-NOTIFICATION_CHANNELS=console,file     # Available channels
-NOTIFICATION_WEBHOOK_URL=              # Webhook URL for notifications
-NOTIFICATION_SLACK_WEBHOOK=            # Slack webhook URL
-NOTIFICATION_EMAIL=                    # Email for notifications
-```
+#### `OPENAI_MODEL`
+- **Description**: OpenAI model to use
+- **Default**: `gpt-4`
+- **Options**: `gpt-4`, `gpt-4-turbo-preview`, `gpt-3.5-turbo`
 
-### Development Settings
-```bash
-# Development mode settings
-DEV_MODE=true                          # Enable development mode
-DEBUG=false                            # Enable debug logging
-VERBOSE_LOGGING=false                  # Enable verbose logging
-ENABLE_METRICS=true                    # Enable metrics collection
-ENABLE_HEALTH_CHECKS=true              # Enable health checks
-```
+### Anthropic Configuration
 
-### File Watching Settings
-```bash
-# File watching configuration
-WATCH_PATHS=src/,lib/,app/,tests/     # Paths to watch for changes
-EXCLUDE_PATHS=node_modules/,dist/,build/,coverage/,.git/
-MAX_FILE_SIZE=1MB                      # Maximum file size to process
-```
+#### `ANTHROPIC_API_KEY`
+- **Description**: Anthropic API key for Claude models
+- **Required**: Yes (if using Anthropic as AI provider)
+- **How to get**: https://console.anthropic.com/account/keys
 
-### Cache Settings
-```bash
-# Caching configuration
-CACHE_ENABLED=true                     # Enable caching
-CACHE_TTL=3600000                      # Cache time-to-live (1h)
-CACHE_MAX_SIZE=100MB                   # Maximum cache size
-```
+#### `ANTHROPIC_MODEL`
+- **Description**: Anthropic model to use
+- **Default**: `claude-3-opus-20240229`
+- **Options**: `claude-3-opus-20240229`, `claude-3-sonnet-20240229`, `claude-3-haiku-20240307`
 
-### API Settings
-```bash
-# API configuration
-API_RATE_LIMIT=100                     # API rate limit per minute
-API_TIMEOUT=30000                      # API timeout (30s)
-API_CORS_ORIGIN=*                      # CORS origin
-API_AUTH_REQUIRED=false                # Require API authentication
-```
+### General AI Configuration
 
-## Environment-Specific Configurations
+#### `AI_PROVIDER`
+- **Description**: Which AI provider to use
+- **Default**: `openai`
+- **Options**: `openai`, `anthropic`
 
-### Development Environment
-```bash
-NODE_ENV=development
-LOG_LEVEL=debug
-DEV_MODE=true
-DEBUG=true
-VERBOSE_LOGGING=true
-```
+## Optional Variables
 
-### Production Environment
-```bash
-NODE_ENV=production
-LOG_LEVEL=warn
-DEV_MODE=false
-DEBUG=false
-VERBOSE_LOGGING=false
-ENABLE_METRICS=true
-```
+### Server Configuration
+
+#### `PORT`
+- **Description**: Port for the development dashboard
+- **Default**: `3000`
+
+#### `NODE_ENV`
+- **Description**: Node environment
+- **Default**: `development`
+- **Options**: `development`, `production`, `test`
 
 ### Cursor Environment
-```bash
-CURSOR_ENVIRONMENT=true
-CURSOR_WORKSPACE_ID=your-workspace-id
-CURSOR_SESSION_ID=your-session-id
-```
 
-## Loading Environment Variables
+#### `CURSOR_ENVIRONMENT`
+- **Description**: Indicates if running in Cursor environment
+- **Default**: `false`
+- **Auto-detected**: Yes
 
-The system automatically loads environment variables from:
-1. `.env` file in the project root
-2. System environment variables
-3. Docker environment variables (when running in container)
+#### `CURSOR_WORKSPACE_ID`
+- **Description**: Cursor workspace identifier
+- **Auto-set**: By Cursor
 
-## Security Notes
-
-- **Never commit `.env` files** to version control
-- **Use strong, unique values** for sensitive variables
-- **Rotate tokens regularly** for GitHub and other integrations
-- **Use environment-specific values** for different deployments
+#### `CURSOR_SESSION_ID`
+- **Description**: Cursor session identifier
+- **Auto-set**: By Cursor
 
 ## Example .env File
 
-```bash
-# Copy this to .env and customize for your environment
-NODE_ENV=development
+Create a `.env` file in the project root:
+
+```env
+# GitHub Configuration
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GITHUB_OWNER=iamdrewfortini
+GITHUB_REPO=background-agents
+
+# AI Configuration (choose one provider)
+# For OpenAI:
+AI_PROVIDER=openai
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_MODEL=gpt-4
+
+# OR for Anthropic:
+# AI_PROVIDER=anthropic
+# ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# ANTHROPIC_MODEL=claude-3-opus-20240229
+
+# Server Configuration
 PORT=3000
-LOG_LEVEL=info
-CURSOR_ENVIRONMENT=true
-GITHUB_TOKEN=your-github-token-here
-MONITORING_ALERT_CPU=80
-TEST_COVERAGE_THRESHOLD=80
+NODE_ENV=development
+
+# Optional: Webhook Secret for GitHub
+# GITHUB_WEBHOOK_SECRET=your-webhook-secret
 ```
+
+## Security Best Practices
+
+1. **Never commit .env files** - The `.env` file is already in `.gitignore`
+2. **Use environment-specific files**:
+   - `.env.local` for local development
+   - `.env.production` for production
+   - `.env.test` for testing
+3. **Rotate tokens regularly** - Especially the GitHub token
+4. **Use minimal permissions** - Only grant the permissions actually needed
+5. **Store secrets securely** in production:
+   - Use environment variables in your deployment platform
+   - Use secret management services (AWS Secrets Manager, HashiCorp Vault, etc.)
+
+## Setting Environment Variables
+
+### Local Development
+```bash
+# Using .env file (recommended)
+cp .env.example .env
+# Edit .env with your values
+
+# Or export directly
+export GITHUB_TOKEN=ghp_xxxx
+export OPENAI_API_KEY=sk-xxxx
+```
+
+### Cursor Environment
+Environment variables are automatically loaded from:
+1. `.env` file in project root
+2. `.cursor/environment.json`
+3. System environment variables
+
+### Production Deployment
+Set environment variables in your deployment platform:
+- **Heroku**: `heroku config:set GITHUB_TOKEN=xxx`
+- **Vercel**: Project Settings → Environment Variables
+- **AWS**: Use Parameter Store or Secrets Manager
+- **Docker**: Use `--env-file` or `-e` flags
 
 ## Troubleshooting
 
-### Common Issues
+### GitHub Token Issues
+- **401 Unauthorized**: Token is invalid or expired
+- **403 Forbidden**: Token lacks required permissions
+- **404 Not Found**: Repository not accessible with token
 
-1. **Variables not loading**: Ensure `.env` file is in the project root
-2. **Permission errors**: Check file permissions on `.env` file
-3. **Missing variables**: Use the example above as a template
-4. **Docker issues**: Pass environment variables via `-e` flag or `docker-compose.yml`
+### AI API Issues
+- **Rate limiting**: Both OpenAI and Anthropic have rate limits
+- **Invalid API key**: Check key format and validity
+- **Model not available**: Ensure you have access to the specified model
 
-### Validation
+### Verification Commands
+```bash
+# Check if GitHub token works
+curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user
 
-The system validates environment variables on startup. Check the logs for any validation errors or missing required variables. 
+# Check OpenAI key
+curl https://api.openai.com/v1/models \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+
+# Check Anthropic key
+curl https://api.anthropic.com/v1/messages \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01"
+``` 

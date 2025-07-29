@@ -127,7 +127,8 @@ class AgentManager extends EventEmitter {
       'git-sync': require('./git-sync').GitSyncAgent,
       'performance': require('./performance').PerformanceAgent,
       'security': require('./security').SecurityAgent,
-      'documentation': require('./documentation').DocumentationAgent
+      'documentation': require('./documentation').DocumentationAgent,
+      'github-automation': require('./github-automation').GitHubAutomationAgent
     };
 
     const AgentClass = agentClasses[agentName];
