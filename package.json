@@ -2,6 +2,10 @@
   "name": "warp-background-agents",
   "version": "1.0.0",
   "description": "A suite of background agents for Warp terminal development and automation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Diatonic-AI/background-agents.git"
+  },
   "main": "index.js",
   "scripts": {
     "dev": "node src/dev-server.js",

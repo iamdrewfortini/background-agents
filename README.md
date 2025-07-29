@@ -2,6 +2,8 @@
 
 A comprehensive suite of background agents for development automation, designed to work seamlessly in both local and Cursor environments.
 
+**Repository**: [https://github.com/Diatonic-AI/background-agents](https://github.com/Diatonic-AI/background-agents)
+
 ## 🚀 Features
 
 - **Real-time Monitoring**: Live agent status and metrics

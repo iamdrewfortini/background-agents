@@ -36,6 +36,6 @@
     }
   ],
   "repositoryDependencies": [
-    "github.com/your-org/background-agents"
+    "github.com/Diatonic-AI/background-agents"
   ]
 } 
