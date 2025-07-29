@@ -1,0 +1,23 @@
+{
+  "repository": {
+    "owner": "Diatonic-AI",
+    "name": "background-agents",
+    "url": "https://github.com/Diatonic-AI/background-agents",
+    "branch": "main",
+    "defaultBranch": "main"
+  },
+  "permissions": {
+    "contents": "write",
+    "metadata": "read",
+    "pull_requests": "write",
+    "issues": "write",
+    "workflows": "write"
+  },
+  "backgroundAgents": {
+    "enabled": true,
+    "autoSync": true,
+    "branchStrategy": "feature",
+    "commitMessageTemplate": "feat: {description}",
+    "prTemplate": "## Changes\n\n{description}\n\n## Testing\n\n- [ ] Tests pass\n- [ ] Code review completed"
+  }
+} 

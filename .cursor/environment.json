@@ -39,5 +39,6 @@
   ],
   "repositoryDependencies": [
     "github.com/Diatonic-AI/background-agents"
-  ]
+  ],
+  "agentCanUpdateSnapshot": true
 } 
