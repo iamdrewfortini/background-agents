@@ -1,0 +1,91 @@
+{
+  "version": "1.0.0",
+  "agents": {
+    "code-review": {
+      "name": "code-review",
+      "description": "Automatically reviews code changes and provides feedback",
+      "enabled": true,
+      "type": "code-review",
+      "config": {
+        "watchPaths": [
+          "src/",
+          "lib/",
+          "app/"
+        ],
+        "excludePaths": [
+          "node_modules/",
+          "dist/",
+          "build/"
+        ],
+        "reviewOnSave": true,
+        "reviewOnCommit": true,
+        "maxFileSize": "1MB",
+        "rules": {
+          "complexity": true,
+          "security": true,
+          "performance": true,
+          "style": true
+        }
+      }
+    },
+    "test-runner": {
+      "name": "test-runner",
+      "description": "Automatically runs tests and reports results",
+      "enabled": true,
+      "type": "test-runner",
+      "config": {
+        "watchPaths": [
+          "src/",
+          "tests/"
+        ],
+        "testCommand": "npm test",
+        "coverageThreshold": 80,
+        "runOnSave": false,
+        "runOnCommit": true,
+        "parallel": true,
+        "timeout": 30000
+      }
+    },
+    "monitoring": {
+      "name": "monitoring",
+      "description": "Monitors application performance and health",
+      "enabled": true,
+      "type": "monitoring",
+      "config": {
+        "metrics": [
+          "cpu",
+          "memory",
+          "disk",
+          "network"
+        ],
+        "alertThresholds": {
+          "cpu": 80,
+          "memory": 85,
+          "disk": 90
+        },
+        "logLevel": "info",
+        "retention": "7d"
+      }
+    },
+    "git-sync": {
+      "name": "git-sync",
+      "description": "Synchronizes with Git repositories and manages branches",
+      "enabled": true,
+      "type": "git-sync",
+      "config": {
+        "autoCommit": false,
+        "autoPush": false,
+        "branchNaming": "feature/{ticket}",
+        "commitMessageTemplate": "feat: {description}",
+        "syncInterval": 300000
+      }
+    }
+  },
+  "global": {
+    "logLevel": "info",
+    "maxConcurrentAgents": 5,
+    "healthCheckInterval": 30000,
+    "restartOnFailure": true,
+    "maxRestartAttempts": 3
+  }
+}

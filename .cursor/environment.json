@@ -1,0 +1,19 @@
+{
+  "snapshot": "POPULATED_FROM_SETTINGS",
+  "install": "npm install && cargo install --locked --git https://github.com/warpdotdev/warp.git",
+  "start": "echo 'Starting Warp terminal background agents environment'",
+  "terminals": [
+    {
+      "name": "Warp Terminal",
+      "command": "warp"
+    },
+    {
+      "name": "Development Server",
+      "command": "npm run dev"
+    },
+    {
+      "name": "Test Runner",
+      "command": "npm test"
+    }
+  ]
+} 
