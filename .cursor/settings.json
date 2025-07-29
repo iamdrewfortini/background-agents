@@ -2,7 +2,7 @@
   "backgroundAgents": {
     "enabled": true,
     "githubIntegration": true,
-    "repository": "https://github.com/Diatonic-AI/background-agents",
+    "repository": "https://github.com/iamdrewfortini/background-agents",
     "branch": "main",
     "autoSync": true
   },
