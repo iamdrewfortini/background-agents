@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
   "name": "Background Agents Development Environment",
   "description": "A comprehensive development environment for background agents with monitoring, automation, and real-time dashboard",
   "user": "root",
@@ -51,8 +52,6 @@
   "repositoryDependencies": [
     "github.com/iamdrewfortini/background-agents"
   ],
-  "snapshot": "ubuntu-22.04",
-  "agentCanUpdateSnapshot": true,
   "build": {
     "context": ".",
     "dockerfile": "Dockerfile"
