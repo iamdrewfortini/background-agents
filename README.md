@@ -33,6 +33,19 @@ npm run dev
 ### Cursor Environment
 The system automatically detects when running in Cursor and starts agents accordingly.
 
+#### Cursor Background Agents Setup
+1. **Press `Ctrl+E`** to open the background agent control panel
+2. **Select "Background Agents Development Environment"**
+3. **Grant GitHub permissions** when prompted
+4. **Wait for environment setup** (installs dependencies and starts agents)
+5. **Access dashboard** at `http://localhost:3000`
+
+#### GitHub Integration
+- Repository: `https://github.com/Diatonic-AI/background-agents`
+- Branch: `main`
+- Permissions: Read/Write access required
+- Auto-sync: Enabled for seamless collaboration
+
 ## 📊 Available Agents
 
 ### Currently Running:

@@ -6,6 +6,11 @@
     "type": "git",
     "url": "https://github.com/Diatonic-AI/background-agents.git"
   },
+  "cursor": {
+    "environment": ".cursor/environment.json",
+    "backgroundAgents": true,
+    "githubIntegration": true
+  },
   "main": "index.js",
   "scripts": {
     "dev": "node src/dev-server.js",

@@ -1,0 +1,34 @@
+{
+  "backgroundAgents": {
+    "enabled": true,
+    "githubIntegration": true,
+    "repository": "https://github.com/Diatonic-AI/background-agents",
+    "branch": "main",
+    "autoSync": true
+  },
+  "environment": {
+    "snapshot": "ubuntu-22.04",
+    "installCommand": "npm install && npm run setup",
+    "startCommand": "npm run dev",
+    "terminals": [
+      {
+        "name": "Dashboard",
+        "command": "npm run dev"
+      },
+      {
+        "name": "Logs",
+        "command": "tail -f logs/combined.log"
+      },
+      {
+        "name": "Monitor",
+        "command": "htop"
+      }
+    ]
+  },
+  "github": {
+    "repository": "Diatonic-AI/background-agents",
+    "branch": "main",
+    "permissions": ["read", "write"],
+    "autoSync": true
+  }
+} 
