@@ -26,7 +26,8 @@
     "clean": "rm -rf logs/* monitoring/* reviews/* test-results/* deployments/* security/* performance/* docs/*",
     "reset": "npm run clean && npm run setup",
     "list": "node src/index.js list",
-    "configure": "node scripts/detect-repo.js && npm run setup"
+    "configure": "node scripts/detect-repo.js && npm run setup",
+    "test-github": "node scripts/test-github-setup.js"
   },
   "keywords": [
     "warp",

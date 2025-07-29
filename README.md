@@ -68,6 +68,12 @@ The system automatically detects when running in Cursor and starts agents accord
 - **Security Agent**: Scans for vulnerabilities and compliance issues
 - **Performance Agent**: Analyzes and optimizes application performance
 - **Documentation Agent**: Automatically generates and maintains documentation
+- **GitHub Automation Agent**: Full GitHub integration with AI-powered features:
+  - Automatic pull request creation and review
+  - Issue management and auto-fixing
+  - AI-powered code improvements
+  - GitHub project management
+  - Automated code generation from issues
 
 ## 🌐 Dashboard
 
@@ -78,6 +84,82 @@ Access the unified dashboard at `http://localhost:3000` to:
 - Configure agent settings
 
 The dashboard automatically detects your environment and shows appropriate branding.
+
+## 🚀 GitHub Automation Agent
+
+The GitHub Automation Agent provides comprehensive GitHub integration with AI-powered capabilities.
+
+### Features
+
+- **Automatic Pull Requests**: Creates PRs from file changes with AI-generated descriptions
+- **Intelligent Code Review**: Reviews PRs using AI and provides detailed feedback
+- **Issue Management**: Automatically responds to and fixes issues
+- **Feature Implementation**: Generates code from issue descriptions
+- **Project Management**: Updates GitHub projects and milestones
+- **AI-Powered Improvements**: Suggests and implements code improvements
+
+### Setup
+
+1. **Create a GitHub Personal Access Token**:
+   - Go to [GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)](https://github.com/settings/tokens/new)
+   - Select these scopes: `repo`, `workflow`, `write:packages`, `admin:org`, `admin:repo_hook`, `project`
+   - Copy the token
+
+2. **Configure AI Provider** (choose one):
+   - **OpenAI**: Get API key from [platform.openai.com](https://platform.openai.com/api-keys)
+   - **Anthropic**: Get API key from [console.anthropic.com](https://console.anthropic.com/account/keys)
+
+3. **Set Environment Variables**:
+   ```bash
+   # Copy example environment file
+   cp .env.example .env
+   
+   # Edit .env and add your tokens:
+   GITHUB_TOKEN=ghp_xxxxxxxxxxxxxx
+   OPENAI_API_KEY=sk-xxxxxxxxxxxxxxx  # or ANTHROPIC_API_KEY
+   ```
+
+4. **Enable the Agent**:
+   ```bash
+   # Edit config/agents.json and set enabled: true for github-automation
+   # Or use the dashboard to enable it
+   ```
+
+### Usage Examples
+
+#### Automatic PR Creation
+When enabled, the agent watches for file changes and automatically creates PRs:
+```javascript
+// config/agents.json
+"github-automation": {
+  "config": {
+    "autoCreatePR": true,
+    "watchPaths": ["src/", "lib/"]
+  }
+}
+```
+
+#### Automatic Issue Fixing
+Label issues with `bug` and the agent will attempt to fix them:
+```javascript
+"github-automation": {
+  "config": {
+    "autoFixIssues": true,
+    "autoImplementFeatures": true
+  }
+}
+```
+
+#### AI Code Review
+The agent automatically reviews all new PRs:
+```javascript
+"github-automation": {
+  "config": {
+    "autoReviewPR": true,
+    "requireApproval": true  // Require human approval before auto-merge
+  }
+}
+```
 
 ## 🔧 Configuration
 
