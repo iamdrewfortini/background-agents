@@ -1,44 +1,86 @@
 {
   "name": "Background Agents Development Environment",
+  "description": "A comprehensive development environment for background agents with monitoring, automation, and real-time dashboard",
   "user": "root",
   "snapshot": "ubuntu-22.04",
-  "install": "npm install && npm run setup && sudo apt-get update && sudo apt-get install -y htop curl wget git",
-  "start": "echo 'Background agents environment ready' && mkdir -p logs monitoring reviews test-results deployments security performance docs && node .cursor/start-agents.js & npm run dev",
+  "install": "npm install && npm run setup && sudo apt-get update && sudo apt-get install -y htop curl wget git tree && npm install -g nodemon",
+  "start": "echo '🚀 Background Agents Environment Starting...' && mkdir -p logs monitoring reviews test-results deployments security performance docs && node .cursor/start-agents.js & sleep 2 && npm run dev",
   "terminals": [
     {
-      "name": "Background Agents Dashboard",
+      "name": "🚀 Background Agents Dashboard",
       "command": "npm run dev",
       "description": "Starts the web dashboard for monitoring background agents on port 3000"
     },
     {
-      "name": "Agent Logs Monitor",
+      "name": "📊 Agent Logs Monitor",
       "command": "tail -f logs/combined.log",
       "description": "Monitors real-time logs from all background agents"
     },
     {
-      "name": "System Monitor",
+      "name": "🖥️ System Monitor",
       "command": "htop",
       "description": "System resource monitoring to track agent performance"
     },
     {
-      "name": "Agent Status",
+      "name": "🤖 Agent Status",
       "command": "watch -n 5 'node src/index.js list'",
       "description": "Periodically displays the status of all background agents"
     },
     {
-      "name": "Development Terminal",
+      "name": "🔧 Development Terminal",
       "command": "bash",
       "description": "Interactive terminal for development and debugging"
+    },
+    {
+      "name": "📁 Project Explorer",
+      "command": "tree -I 'node_modules|logs|monitoring|reviews|test-results|deployments|security|performance|docs'",
+      "description": "Shows the project structure excluding generated files"
+    },
+    {
+      "name": "⚡ Quick Commands",
+      "command": "echo 'Available commands:' && echo 'npm start - Start all agents' && echo 'npm run dev - Start dashboard' && echo 'npm run list - List agents' && echo 'npm run clean - Clean logs' && bash",
+      "description": "Terminal with quick reference commands"
     }
   ],
   "ports": [
     {
-      "name": "Background Agents Dashboard",
-      "port": 3000
+      "name": "🚀 Background Agents Dashboard",
+      "port": 3000,
+      "description": "Web interface for monitoring and controlling background agents"
     }
   ],
   "repositoryDependencies": [
     "github.com/iamdrewfortini/background-agents"
   ],
-  "agentCanUpdateSnapshot": true
+  "agentCanUpdateSnapshot": true,
+  "backgroundAgents": {
+    "enabled": true,
+    "autoStart": true,
+    "monitoring": {
+      "enabled": true,
+      "interval": 30000,
+      "metrics": ["cpu", "memory", "disk", "network"]
+    },
+    "codeReview": {
+      "enabled": true,
+      "watchPaths": ["src/", "lib/", "app/"],
+      "autoFix": false
+    },
+    "testRunner": {
+      "enabled": true,
+      "command": "npm test",
+      "coverage": true
+    },
+    "gitSync": {
+      "enabled": true,
+      "autoCommit": false,
+      "autoPush": false
+    }
+  },
+  "environment": {
+    "NODE_ENV": "development",
+    "LOG_LEVEL": "info",
+    "PORT": "3000",
+    "CURSOR_ENVIRONMENT": "true"
+  }
 } 
