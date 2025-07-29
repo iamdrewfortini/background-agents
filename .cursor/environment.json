@@ -38,7 +38,7 @@
     }
   ],
   "repositoryDependencies": [
-    "github.com/Diatonic-AI/background-agents"
+    "github.com/iamdrewfortini/background-agents"
   ],
   "agentCanUpdateSnapshot": true
 } 

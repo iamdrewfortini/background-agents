@@ -4,7 +4,7 @@
   "description": "A suite of background agents for Warp terminal development and automation",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Diatonic-AI/background-agents.git"
+    "url": "https://github.com/iamdrewfortini/background-agents.git"
   },
   "cursor": {
     "environment": ".cursor/environment.json",

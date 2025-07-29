@@ -2,7 +2,7 @@
 
 A comprehensive suite of background agents for development automation, designed to work seamlessly in both local and Cursor environments.
 
-**Repository**: [https://github.com/Diatonic-AI/background-agents](https://github.com/Diatonic-AI/background-agents)
+**Repository**: [https://github.com/iamdrewfortini/background-agents](https://github.com/iamdrewfortini/background-agents)
 
 ## 🚀 Features
 
@@ -36,7 +36,7 @@ The system automatically detects when running in Cursor and starts agents accord
 #### Cursor Background Agents Setup
 1. **Grant Cursor GitHub App Access**:
    - Visit: https://github.com/apps/cursor
-   - Click "Install" and select `Diatonic-AI` organization
+   - Click "Install" and select your personal account (`iamdrewfortini`)
    - Grant **Read and Write** permissions to `background-agents` repository
    
 2. **Start Background Agents**:
@@ -46,7 +46,7 @@ The system automatically detects when running in Cursor and starts agents accord
    - Access dashboard at `http://localhost:3000`
 
 #### GitHub Integration
-- Repository: `https://github.com/Diatonic-AI/background-agents`
+- Repository: `https://github.com/iamdrewfortini/background-agents`
 - Branch: `main`
 - Permissions: Read/Write access required
 - Auto-sync: Enabled for seamless collaboration

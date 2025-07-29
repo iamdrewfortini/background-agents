@@ -26,7 +26,7 @@
     ]
   },
   "github": {
-    "repository": "Diatonic-AI/background-agents",
+    "repository": "iamdrewfortini/background-agents",
     "branch": "main",
     "permissions": ["read", "write"],
     "autoSync": true
