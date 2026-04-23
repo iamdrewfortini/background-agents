@@ -1,0 +1,17 @@
+{
+  "name": "@wrc/runclub-embed",
+  "version": "1.0.0",
+  "description": "Framework-agnostic animated WRC Run Club logo embed",
+  "main": "index.js",
+  "module": "dist/wrc-runclub-embed.umd.js",
+  "files": [
+    "dist",
+    "react",
+    "index.js",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "license": "MIT"
+}
